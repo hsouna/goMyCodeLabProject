@@ -1,0 +1,105 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: angular-deployment
+spec: 
+  replicas: 3
+  selector: 
+    matchLabels: 
+      app: angular-app
+  template: 
+    metadata: 
+      labels: 
+        app: angular-app
+    spec: 
+      containers: 
+        - 
+          image: "hassmez/angular:latest"
+          name: angular
+---
+ 
+
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: angular-app
+  name: angular-network
+spec: 
+  ports: 
+    - 
+      port: 80
+  type: LoadBalancer
+  selector: 
+    app: angular-app
+--- 
+ 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels: 
+    app: express-app
+  name: express-deplyment
+spec: 
+  replicas: 3
+  selector: 
+    matchLabels: 
+      app: express-app
+  template: 
+    metadata: 
+      labels: 
+        app: express-app
+    spec: 
+      containers: 
+        - 
+          image: "hassmez/express:latest"
+          name: express
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: express-app
+  name: express-network
+spec: 
+  ports: 
+    - 
+      port: 3000
+  selector: 
+    app: express-app
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb-app
+  template:
+    metadata:
+      labels:
+        app: mongodb-app
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
