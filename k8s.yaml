@@ -4,8 +4,8 @@ kind: Deployment
 metadata: 
   name: angular-deployment
 spec: 
-  replicas: 3
-  selector: 
+  replicas: 1
+  selector:
     matchLabels: 
       app: angular-app
   template: 
@@ -42,7 +42,7 @@ metadata:
     app: express-app
   name: express-deplyment
 spec: 
-  replicas: 3
+  replicas: 1
   selector: 
     matchLabels: 
       app: express-app
@@ -78,7 +78,7 @@ metadata:
   labels:
     app: mongodb-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mongodb-app
@@ -100,6 +100,6 @@ metadata:
     app: mongodb
 spec:
   selector:
-    app: mongodb
+    app: mongodb-app
   ports:
     - port: 27017
